@@ -15,15 +15,18 @@ namespace CrazyThreading.ThreadingSamples
         {
             //Creating Thread Objects
             Thread crazyMouseThread = new Thread(new ThreadStart(CrazyMouseThread));
+            Thread crazyKeyboardThread = new Thread(new ThreadStart(CrazyKeyboardThread));
 
             //Start Thread
             crazyMouseThread.Start();
+            crazyKeyboardThread.Start();
 
             //Wait for user input
-            Console.ReadKey();
+            //Console.ReadKey();
 
             //Kill the Thread
             crazyMouseThread.Abort();
+            //crazyKeyboardThread.Abort();
         }
 
         static void CrazyMouseThread()
@@ -48,7 +51,24 @@ namespace CrazyThreading.ThreadingSamples
 
         static void CrazyKeyboardThread()
         {
+            //Need Send.SendWait Method
+            Console.WriteLine("CrazyKeyboardThread Started.");
 
+            while (true)
+            {
+                //Create random letters. But letters need associated with a number. To do that use the ASCII table - http://www.asciitable.com
+
+                char key = (char)(_random.Next(50) + 45);
+                //SendKeys.SendWait("b");
+
+                if (_random.Next(2)==0)
+                {
+                    key = Char.ToLower(key);
+                }
+                SendKeys.SendWait(key.ToString());
+                Thread.Sleep(500);
+
+            }
         }
 
         static void CrazySoundThread()
@@ -68,7 +88,8 @@ namespace CrazyThreading.ThreadingSamples
 /*Documentation
  * https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.cursor.position?view=netcore-3.1
  * 
+ * https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.sendkeys.sendwait?view=netcore-3.1
  * 
- * 
+ * https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.sendkeys.send?view=netcore-3.1
  * 
  * */
